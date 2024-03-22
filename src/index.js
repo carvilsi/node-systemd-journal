@@ -19,5 +19,5 @@ export async function jlogger(message, tag) {
     if (typeof tag !== 'undefined') {
         loggerCommand = `${loggerCommand} --tag ${tag} `;
     }
-    await exec(loggerCommand);
+    return await exec(loggerCommand);
 }

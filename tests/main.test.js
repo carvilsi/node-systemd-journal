@@ -8,6 +8,29 @@ test('should create an entry at systemd journal', async(t) => {
     t.pass();
 });
 
+test('should throws an error', async(t) => {
+    try {     
+        await jlogger('`');
+    } catch (err) {
+        t.true(err instanceof Error);
+    }
+});
+
+test('should create an entry at systemd journal with a tag', async(t) => {
+    await jlogger('should create an entry at systemd journal',
+        'NODE_SYSTEMD_JOURNAL');
+    t.pass();
+});
+
+test('should throw an error since there is no tag', async(t) => {
+    try {
+        //await jlogger('should create an entry at systemd journal','');
+        await jlogger(undefined);
+    } catch (err) {
+        console.log(err.message);
+        t.true(err instanceof Error);
+    }
+});
 // test('should retrieve a random face', (t) => {
 // console.log(face);
 
