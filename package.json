@@ -15,22 +15,17 @@
     "lint-fix": "./node_modules/eslint/bin/eslint.js src/ --ext .js --fix",
     "lint-test-fix": "./node_modules/eslint/bin/eslint.js tests/ --ext .js --fix",
     "benchmark": "node ./benchmark/benchmark.js > ./benchmark/report.txt && cat ./benchmark/report.txt",
-    "dev": "nodemon -w . -x 'npm test'",
+    "dev": "nodemon -w . -x 'npm test && npm run benchmark'",
     "pre-release": "npm audit && ./pre-release.sh",
     "release": "tag=$(node -e \"console.log(require('./package.json').version)\"); git tag v${tag}; git push origin v${tag} && npm publish"
   },
   "keywords": [
-    "textfaces",
+    "systemd",
     "nodejs",
-    "emoji",
+    "linux",
     "npm",
-    "ascii-art",
-    "emoticons",
-    "text-based",
-    "kaomoji",
-    "emoticon",
-    "kaomoji-emoticons",
-    "text-faces" 
+    "logger",
+    "journalctl"
   ],
   "author": "char@omg.lol",
   "license": "MIT",

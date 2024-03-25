@@ -15,7 +15,7 @@ function checkPlatform() {
 }
 
 export async function jlogger(message, tag) {
-    checkPlatform();    
+    checkPlatform();
     if (typeof message === 'undefined' || !message.trim().length) {
         throw new Error('\'message\' parameter is mandatory');
     }
@@ -26,16 +26,13 @@ export async function jlogger(message, tag) {
     return await exec(loggerCommand);
 }
 
-/* eslint no-console: "off" */
 export async function jjournal(tag) {
     checkPlatform();
     if (typeof tag === 'undefined' || !tag.trim().length) {
         throw new Error('\'tag\' parameter is mandatory');
     }
     const journalctlCommand = `journalctl -t ${tag}`;
-    const { stdout, stderr } = await exec(journalctlCommand);
-    console.log(typeof stdout);
-    console.log(typeof stderr);
+    const { stdout } = await exec(journalctlCommand);
     return stdout;
 }
 
