@@ -1,10 +1,9 @@
-/* eslint no-console: "off" */
-
 import test from 'ava';
+import { randomUUID } from 'node:crypto';
 import { jlogger, jjournal } from '../src/index.js';
 
 const MESSAGE = 'a foo in tha bar for lol';
-const TAG = 'NODE_SYSTEMD_JOURNAL';
+const TAG = `NODE_SYSTEMD_JOURNAL_${randomUUID()}`;
 
 test('should create an entry at systemd journal', async(t) => {
     await jlogger('an entry at systemd journal without tag');
@@ -43,6 +42,14 @@ test('should throw an error since message consist of spaces', async(t) => {
 test.serial('should retrieve a log by tag', async(t) => {
     const slog = await jjournal(TAG);
     t.true(slog.indexOf(MESSAGE) >= 0);
+    t.true(typeof slog === 'string');
+});
+
+test.serial('should retrieve a log by tag in JSON format', async(t) => {
+    const slogJSON = await jjournal(TAG, true);
+    t.true(slogJSON[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(slogJSON[0].MESSAGE === MESSAGE);
+    t.true(typeof slogJSON === 'object');
 });
 
 test('jjournal should throw an error', async(t) => {

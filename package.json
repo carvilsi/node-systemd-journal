@@ -15,7 +15,7 @@
     "lint-fix": "./node_modules/eslint/bin/eslint.js src/ --ext .js --fix",
     "lint-test-fix": "./node_modules/eslint/bin/eslint.js tests/ --ext .js --fix",
     "benchmark": "node ./benchmark/benchmark.js > ./benchmark/report.txt && cat ./benchmark/report.txt",
-    "dev": "nodemon -w . -x 'npm test && npm run benchmark'",
+    "dev": "nodemon -w . -x 'npm test'",
     "pre-release": "npm audit && ./pre-release.sh",
     "release": "tag=$(node -e \"console.log(require('./package.json').version)\"); git tag v${tag}; git push origin v${tag} && npm publish"
   },

@@ -2,6 +2,8 @@ import os from 'node:os';
 import child_process from 'node:child_process';
 import util from 'node:util';
 
+import { toJSONArray } from './util.js';
+
 const exec = util.promisify(child_process.exec);
 
 const PLATFORM_SUPPORTED = [ 'linux' ];
@@ -26,13 +28,19 @@ export async function jlogger(message, tag) {
     return await exec(loggerCommand);
 }
 
-export async function jjournal(tag) {
+export async function jjournal(tag, json = false) {
     checkPlatform();
     if (typeof tag === 'undefined' || !tag.trim().length) {
         throw new Error('\'tag\' parameter is mandatory');
     }
-    const journalctlCommand = `journalctl -t ${tag}`;
+    let journalctlCommand = `journalctl -t ${tag}`;
+    if (json) {
+        journalctlCommand = `${journalctlCommand} -o json`;
+    }
     const { stdout } = await exec(journalctlCommand);
+    if (json) {
+        return toJSONArray(stdout);
+    }
     return stdout;
 }
 
