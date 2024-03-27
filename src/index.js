@@ -1,20 +1,9 @@
-import os from 'node:os';
 import child_process from 'node:child_process';
 import util from 'node:util';
 
-import { toJSONArray } from './util.js';
+import { toJSONArray, checkPlatform } from './util.js';
 
 const exec = util.promisify(child_process.exec);
-
-const PLATFORM_SUPPORTED = [ 'linux' ];
-const platform = os.platform();
-
-function checkPlatform() {
-    if (!PLATFORM_SUPPORTED.includes(platform)) {
-        throw new Error(`${platform} is not supported, ` +
-            `you need a ${PLATFORM_SUPPORTED}`);
-    }
-}
 
 export async function jlogger(message, tag) {
     checkPlatform();
