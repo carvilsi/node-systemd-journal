@@ -28,7 +28,11 @@ export async function jlogger(message, tag) {
     return await exec(loggerCommand);
 }
 
-export async function jjournal(tag, json = false) {
+export async function jjournal(tag, {
+    json = false,
+    lines = 0,
+    reverse = false
+} = {}) {
     checkPlatform();
     if (typeof tag === 'undefined' || !tag.trim().length) {
         throw new Error('\'tag\' parameter is mandatory');
@@ -36,6 +40,12 @@ export async function jjournal(tag, json = false) {
     let journalctlCommand = `journalctl -t ${tag}`;
     if (json) {
         journalctlCommand = `${journalctlCommand} -o json`;
+    }
+    if (lines) {
+        journalctlCommand = `${journalctlCommand} -n ${lines}`;
+    }
+    if (reverse) {
+        journalctlCommand = `${journalctlCommand} -r`;
     }
     const { stdout } = await exec(journalctlCommand);
     if (json) {

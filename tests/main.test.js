@@ -16,10 +16,11 @@ test('should throws an error', async(t) => {
     }, { instanceOf: Error });
 });
 
-test.serial('should create an entry at systemd journal with a tag', async(t) => {
-    await jlogger(MESSAGE, TAG);
-    t.pass();
-});
+test.serial('should create an entry at systemd journal with a tag',
+    async(t) => {
+        await jlogger(MESSAGE, TAG);
+        t.pass();
+    });
 
 test('should throw an error since there is no message', async(t) => {
     await t.throwsAsync(async() => {
@@ -46,7 +47,7 @@ test.serial('should retrieve a log by tag', async(t) => {
 });
 
 test.serial('should retrieve a log by tag in JSON format', async(t) => {
-    const slogJSON = await jjournal(TAG, true);
+    const slogJSON = await jjournal(TAG, { json: true });
     t.true(slogJSON[0].SYSLOG_IDENTIFIER === TAG);
     t.true(slogJSON[0].MESSAGE === MESSAGE);
     t.true(typeof slogJSON === 'object');
@@ -75,4 +76,48 @@ test('should not retrieve a log since tag consists of spaces', async(t) => {
         await jjournal(' ');
     }, { instanceOf: Error, message: '\'tag\' parameter is mandatory' });
 });
+
+test.serial('should retrieve two lines of log', async(t) => {
+    for (let i = 0; i < 5; i++) {
+        await jlogger(`${i}-foobar`, TAG);
+    }
+    const lines = await jjournal(TAG, { lines: 2 });
+    const arrOfLines = lines.split('\n');
+    arrOfLines.pop();
+    t.true(arrOfLines.length === 2);
+    t.true(arrOfLines[0].indexOf('3-foobar') >= 0);
+    t.true(arrOfLines[1].indexOf('4-foobar') >= 0);
+    t.true(typeof lines === 'string');
+});
+
+test.serial('should retrieve two lines of log on JSON format', async(t) => {
+    const linesJSON = await jjournal(TAG, { json: true, lines: 2 });
+    t.true(linesJSON.length === 2);
+    t.true(linesJSON[0].MESSAGE === '3-foobar');
+    t.true(linesJSON[1].MESSAGE === '4-foobar');
+    t.true(typeof linesJSON === 'object');
+});
+
+test.serial('should retrieve two lines of log in reverse mode', async(t) => {
+    const lines = await jjournal(TAG, { lines: 2, reverse: true });
+    const arrOfLines = lines.split('\n');
+    arrOfLines.pop();
+    t.true(arrOfLines.length === 2);
+    t.true(arrOfLines[0].indexOf('4-foobar') >= 0);
+    t.true(arrOfLines[1].indexOf('3-foobar') >= 0);
+    t.true(typeof lines === 'string');
+});
+
+test.serial('should retrieve two lines of log on JSON format and reverse mode',
+    async(t) => {
+        const linesJSON = await jjournal(TAG, {
+            json: true,
+            lines: 2,
+            reverse: true
+        });
+        t.true(linesJSON.length === 2);
+        t.true(linesJSON[0].MESSAGE === '4-foobar');
+        t.true(linesJSON[1].MESSAGE === '3-foobar');
+        t.true(typeof linesJSON === 'object');
+    });
 

@@ -14,6 +14,8 @@
     "lint-test": "./node_modules/eslint/bin/eslint.js tests/ --ext .js",
     "lint-fix": "./node_modules/eslint/bin/eslint.js src/ --ext .js --fix",
     "lint-test-fix": "./node_modules/eslint/bin/eslint.js tests/ --ext .js --fix",
+    "lint-bench": "./node_modules/eslint/bin/eslint.js benchmark/benchmark.js --ext .js",
+    "lint-bench-fix": "./node_modules/eslint/bin/eslint.js benchmark/benchmark.js --ext .js --fix",
     "benchmark": "node ./benchmark/benchmark.js > ./benchmark/report.txt && cat ./benchmark/report.txt",
     "dev": "nodemon -w . -x 'npm test'",
     "pre-release": "npm audit && ./pre-release.sh",
