@@ -101,4 +101,10 @@ The properties of the JSON object from journal are:
   '_COMM'
 ]
 ```
+More info about [Journal JSON format](https://systemd.io/JOURNAL_EXPORT_FORMATS#journal-json-format)
 
+More info also:
+
+`$ man journalctl`
+
+`$ man logger`
