@@ -31,7 +31,7 @@ You can check the added entry to journal like:
 **Options**
 This could be provided when instantiate or override when calling *write* or *read*.
 
-```javascrip
+```javascript
 const options = {
     // string; the choosen tag, if not provided the default will be 'SysDLogger'
     tag: 'SysDLogger', 
@@ -44,7 +44,7 @@ const options = {
 }
 ```  
 
-With reading options you can do things like:
+With options for writing and reading you can do things like:
 
 ```javascript
 import { SysDLogger } from 'sysdlogger';
@@ -108,3 +108,8 @@ More info also:
 `$ man journalctl`
 
 `$ man logger`
+
+---
+
+Feedback from usage and contributions are very welcome.
+Also if you like it, please leave a :star: I would appreciate it ;)
