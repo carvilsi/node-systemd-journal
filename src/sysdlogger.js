@@ -5,7 +5,7 @@ import { toJSONArray, checkPlatform } from './util.js';
 
 const exec = util.promisify(child_process.exec);
 
-export class SysLogger {
+export class SysDLogger {
     options = {
         tag: this.constructor.name,
         json: false,

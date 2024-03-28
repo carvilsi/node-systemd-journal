@@ -1,10 +1,10 @@
 {
-  "name": "node-systemd-journal",
+  "name": "sysdlogger",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.js",
+  "main": "./src/sysdlogger.js",
   "type": "module",
-  "exports": "./src/index.js",
+  "exports": "./src/sysdlogger.js",
   "scripts": {
     "test": "npm run lint && npm run lint-test && npm run test-src",
     "test-src": "./node_modules/c8/bin/c8.js ava", 
@@ -20,6 +20,10 @@
     "pre-release": "npm audit && ./pre-release.sh",
     "release": "tag=$(node -e \"console.log(require('./package.json').version)\"); git tag v${tag}; git push origin v${tag} && npm publish"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carvilsi/node-systemd-journal"
+  },
   "keywords": [
     "systemd",
     "nodejs",
@@ -28,7 +32,7 @@
     "logger",
     "journalctl"
   ],
-  "author": "char@omg.lol",
+  "author": "carvilsi@gmail.com",
   "license": "MIT",
   "devDependencies": {
     "ava": "^6.1.2",

@@ -1,12 +1,12 @@
 import test from 'ava';
 import { randomUUID } from 'node:crypto';
-import { SysLogger } from '../src/index.js';
+import { SysDLogger } from '../src/sysdlogger.js';
 
 const MESSAGE = 'a foo in tha bar for lol';
 const TAG = `NODE_SYSTEMD_JOURNAL_${randomUUID()}`;
 const ERROR_MESSAGE = '\'message\' parameter is mandatory and must be a string';
 
-const syslogger = new SysLogger({ tag: TAG });
+const syslogger = new SysDLogger({ tag: TAG });
 
 test('should throws an error', async(t) => {
     await t.throwsAsync(async() => {
@@ -110,7 +110,7 @@ test.serial('should retrieve two lines of log on JSON format and reverse mode',
 test('should use the defatult tag if is not provided ' +
     'when creating the instance',
 async(t) => {
-    const sjournal = new SysLogger();
+    const sjournal = new SysDLogger();
     const message = 'a logger entry without custom tag';
     await sjournal.write(message);
     const lines = await sjournal.read({ json: true, lines: 1 });
@@ -122,7 +122,7 @@ async(t) => {
 
 test('should use the defatult tag if is empty when creating the instance',
     async(t) => {
-        const sjournal = new SysLogger({ tag: '', json: true, lines: 1 });
+        const sjournal = new SysDLogger({ tag: '', json: true, lines: 1 });
         const message = 'a logger entry without custom tag';
         await sjournal.write(message);
         const lines = await sjournal.read();
@@ -135,7 +135,7 @@ test('should use the defatult tag if is empty when creating the instance',
 test('should use the defatult tag if consists on spaces when ' +
     'creating the instance',
 async(t) => {
-    const sjournal = new SysLogger({ tag: '   ', json: true, lines: 1 });
+    const sjournal = new SysDLogger({ tag: '   ', json: true, lines: 1 });
     const message = 'a logger entry without custom tag';
     await sjournal.write(message);
     const lines = await sjournal.read();

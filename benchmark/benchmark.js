@@ -1,7 +1,7 @@
 /* eslint no-console: "off" */
 
 import { Bench } from 'tinybench';
-import { SysLogger } from './../src/index.js';
+import { SysDLogger } from './../src/sysdlogger.js';
 import { randomUUID } from 'node:crypto';
 
 const bench = new Bench({ time: 100 });
@@ -9,7 +9,7 @@ const bench = new Bench({ time: 100 });
 const TAG = `NODE_SYSTEMD_JOURNAL_${randomUUID()}`;
 const MESSAGE = 'a foo at the bar for lol';
 const CUSTOM_TAG = 'foobar';
-const syslogger = new SysLogger({ tag: TAG });
+const syslogger = new SysDLogger({ tag: TAG });
 
 (async() => {
     bench
