@@ -5,7 +5,7 @@ import { toJSONArray, checkPlatform } from './util.js';
 
 const exec = util.promisify(child_process.exec);
 
-export default class SysdJournal {
+export class SysLogger {
     options = {
         tag: this.constructor.name,
         json: false,
@@ -24,14 +24,14 @@ export default class SysdJournal {
 
     #getJournalCommand(tag, json, lines, reverse) {
         const t = tag || this.options.tag;
-        const line = lines || this.options.lines;
+        const numberOflines = lines || this.options.lines;
 
         let journalctlCommand = `journalctl -t ${t}`;
         if (json || this.options.json) {
             journalctlCommand = `${journalctlCommand} -o json`;
         }
-        if (line) {
-            journalctlCommand = `${journalctlCommand} -n ${line}`;
+        if (numberOflines) {
+            journalctlCommand = `${journalctlCommand} -n ${numberOflines}`;
         }
         if (reverse || this.options.reverse) {
             journalctlCommand = `${journalctlCommand} -r`;
