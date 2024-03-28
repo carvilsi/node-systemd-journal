@@ -164,4 +164,3 @@ test('should override the TAG', async(t) => {
     t.true(typeof slogJSON === 'object');
 });
 
-/* eslint no-console: "off" */
