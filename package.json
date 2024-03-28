@@ -1,0 +1,43 @@
+{
+  "name": "sysdlogger",
+  "version": "1.0.0",
+  "description": "Create and retrieve log entries from the systemd journal",
+  "main": "./src/sysdlogger.js",
+  "type": "module",
+  "exports": "./src/sysdlogger.js",
+  "scripts": {
+    "test": "npm run lint && npm run lint-test && npm run test-src",
+    "test-src": "./node_modules/c8/bin/c8.js ava", 
+    "coverage": "./node_modules/c8/bin/c8.js npm test",
+    "lint": "./node_modules/eslint/bin/eslint.js src/ --ext .js",
+    "lint-test": "./node_modules/eslint/bin/eslint.js tests/ --ext .js",
+    "lint-fix": "./node_modules/eslint/bin/eslint.js src/ --ext .js --fix",
+    "lint-test-fix": "./node_modules/eslint/bin/eslint.js tests/ --ext .js --fix",
+    "lint-bench": "./node_modules/eslint/bin/eslint.js benchmark/benchmark.js --ext .js",
+    "lint-bench-fix": "./node_modules/eslint/bin/eslint.js benchmark/benchmark.js --ext .js --fix",
+    "benchmark": "node ./benchmark/benchmark.js > ./benchmark/report.txt && cat ./benchmark/report.txt",
+    "dev": "nodemon -w . -x 'npm test'",
+    "pre-release": "npm audit && ./pre-release.sh",
+    "release": "tag=$(node -e \"console.log(require('./package.json').version)\"); git tag v${tag}; git push origin v${tag} && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carvilsi/node-systemd-journal"
+  },
+  "keywords": [
+    "systemd",
+    "nodejs",
+    "linux",
+    "npm",
+    "logger",
+    "journalctl"
+  ],
+  "author": "carvilsi@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^6.1.2",
+    "c8": "^9.1.0",
+    "eslint": "^8.57.0",
+    "tinybench": "^2.6.0"
+  }
+}
