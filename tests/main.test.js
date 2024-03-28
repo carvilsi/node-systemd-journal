@@ -57,7 +57,7 @@ test.serial('should retrieve a log by tag in JSON format', async(t) => {
     t.true(typeof slogJSON === 'object');
 });
 
-test('syslog.read should throw an error', async(t) => {
+test('syslog read should throw an error', async(t) => {
     await t.throwsAsync(async() => {
         await syslog.read({ tag: '`' });
     }, { instanceOf: Error });

@@ -15,11 +15,11 @@ export default class SysdJournal {
 
     constructor(opts) {
         checkPlatform();
-        const options = opts || {};
+        const options = opts || this.options;
         if (typeof options.tag === 'undefined' || !options.tag.trim().length) {
             options.tag = this.options.tag;
         }
-        this.options = options || this.options;
+        this.options = options;
     }
 
     #getJournalCommand(tag, json, lines, reverse) {
