@@ -1,3 +1,8 @@
+<div align="center">
+  <img src="https://img.shields.io/github/actions/workflow/status/carvilsi/node-systemd-journal/tests.yml?logo=github&label=tests" alt="test">
+  <p></p>
+</div>
+
 # node-systemd-journal
 
 Interact with linux systemd journal, adding entries and retrieving logs from NodeJS.
