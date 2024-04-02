@@ -168,7 +168,7 @@ test('should override the TAG', async(t) => {
     t.true(typeof slogJSON === 'object');
 });
 
-test('should log with default level; notice (5)', async(t) => {
+test.serial('should log with default level; notice (5)', async(t) => {
     const message = 'the default level is notice [5]';
     await syslogger.write(message);
     const slogJSON = await syslogger.read({
@@ -182,16 +182,36 @@ test('should log with default level; notice (5)', async(t) => {
     t.true(typeof slogJSON === 'object');
 });
 
-test('should log with custom level on new instance; warning (4)', async(t) => {
+test.serial('should log with custom level on new instance; warning (4)',
+    async(t) => {
+        const sjournal = new SysDLogger({
+            json: true,
+            lines: 1,
+            level: 'warning'
+        });
+        const message = 'the level is warning [4]';
+        await sjournal.write(message);
+        const slogJSON = await sjournal.read({
+            json: true,
+            reverse: true,
+            lines: 1,
+        });
+        t.true(slogJSON[0].PRIORITY === '4');
+        t.true(slogJSON[0].SYSLOG_IDENTIFIER === sjournal.constructor.name);
+        t.true(slogJSON[0].MESSAGE === message);
+        t.true(typeof slogJSON === 'object');
+    });
+
+test.serial('should write log with custom level error (3)', async(t) => {
     const sjournal = new SysDLogger({ json: true, lines: 1, level: 'warning' });
-    const message = 'the level is warning [4]';
-    await sjournal.write(message);
+    const message = 'the level is error [3]';
+    await sjournal.write(message, { level: 'err' });
     const slogJSON = await sjournal.read({
         json: true,
         reverse: true,
         lines: 1,
     });
-    t.true(slogJSON[0].PRIORITY === '4');
+    t.true(slogJSON[0].PRIORITY === '3');
     t.true(slogJSON[0].SYSLOG_IDENTIFIER === sjournal.constructor.name);
     t.true(slogJSON[0].MESSAGE === message);
     t.true(typeof slogJSON === 'object');
@@ -201,6 +221,13 @@ test('should throw an error on new instance and wrong level', async(t) => {
     await t.throwsAsync(async() => {
         const foo = new SysDLogger({ level: 'foobar' });
         await foo.write('will not arrive here');
+    }, { instanceOf: Error, message: ERROR_MESSAGE_LEVEL });
+});
+
+test('should throw an error writing with wrong level', async(t) => {
+    await t.throwsAsync(async() => {
+        const foo = new SysDLogger();
+        await foo.write('will throw an exexption', { level: 'foobar' });
     }, { instanceOf: Error, message: ERROR_MESSAGE_LEVEL });
 });
 
