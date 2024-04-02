@@ -203,7 +203,7 @@ test.serial('should log with custom level on new instance; warning (4)',
     });
 
 test.serial('should write log with custom level error (3)', async(t) => {
-    const sjournal = new SysDLogger({ json: true, lines: 1, level: 'warning' });
+    const sjournal = new SysDLogger({ level: 'warning' });
     const message = 'the level is error [3]';
     await sjournal.write(message, { level: 'err' });
     const slogJSON = await sjournal.read({
