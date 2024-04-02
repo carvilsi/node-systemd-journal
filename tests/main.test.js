@@ -5,6 +5,9 @@ import { SysDLogger } from '../src/sysdlogger.js';
 const MESSAGE = 'a foo in tha bar for lol';
 const TAG = `NODE_SYSTEMD_JOURNAL_${randomUUID()}`;
 const ERROR_MESSAGE = '\'message\' parameter is mandatory and must be a string';
+const ERROR_MESSAGE_LEVEL = 'not valid log level: \'foobar\', ' +
+    'the valid levels are: [emerg, alert, crit, err, error, warning, ' +
+    'warn, notice, info, debug]';
 
 const syslogger = new SysDLogger({ tag: TAG });
 
@@ -107,7 +110,7 @@ test.serial('should retrieve two lines of log on JSON format and reverse mode',
         t.true(typeof linesJSON === 'object');
     });
 
-test('should use the defatult tag if is not provided ' +
+test.serial('should use the defatult tag if is not provided ' +
     'when creating the instance',
 async(t) => {
     const sjournal = new SysDLogger();
@@ -120,19 +123,20 @@ async(t) => {
     t.true(typeof lines === 'object');
 });
 
-test('should use the defatult tag if is empty when creating the instance',
-    async(t) => {
-        const sjournal = new SysDLogger({ tag: '', json: true, lines: 1 });
-        const message = 'a logger entry without custom tag';
-        await sjournal.write(message);
-        const lines = await sjournal.read();
-        t.true(lines.length === 1);
-        t.true(lines[0].MESSAGE === message);
-        t.true(lines[0].SYSLOG_IDENTIFIER === sjournal.constructor.name);
-        t.true(typeof lines === 'object');
-    });
+test.serial('should use the defatult tag if is empty ' +
+    'when creating the instance',
+async(t) => {
+    const sjournal = new SysDLogger({ tag: '', json: true, lines: 1 });
+    const message = 'a logger entry without custom tag';
+    await sjournal.write(message);
+    const lines = await sjournal.read();
+    t.true(lines.length === 1);
+    t.true(lines[0].MESSAGE === message);
+    t.true(lines[0].SYSLOG_IDENTIFIER === sjournal.constructor.name);
+    t.true(typeof lines === 'object');
+});
 
-test('should use the defatult tag if consists on spaces when ' +
+test.serial('should use the defatult tag if consists on spaces when ' +
     'creating the instance',
 async(t) => {
     const sjournal = new SysDLogger({ tag: '   ', json: true, lines: 1 });
@@ -162,5 +166,41 @@ test('should override the TAG', async(t) => {
     t.true(slogJSON[0].SYSLOG_IDENTIFIER === overrideTag);
     t.true(slogJSON[0].MESSAGE === message);
     t.true(typeof slogJSON === 'object');
+});
+
+test('should log with default level; notice (5)', async(t) => {
+    const message = 'the default level is notice [5]';
+    await syslogger.write(message);
+    const slogJSON = await syslogger.read({
+        json: true,
+        reverse: true,
+        lines: 1,
+    });
+    t.true(slogJSON[0].PRIORITY === '5');
+    t.true(slogJSON[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(slogJSON[0].MESSAGE === message);
+    t.true(typeof slogJSON === 'object');
+});
+
+test('should log with custom level on new instance; warning (4)', async(t) => {
+    const sjournal = new SysDLogger({ json: true, lines: 1, level: 'warning' });
+    const message = 'the level is warning [4]';
+    await sjournal.write(message);
+    const slogJSON = await sjournal.read({
+        json: true,
+        reverse: true,
+        lines: 1,
+    });
+    t.true(slogJSON[0].PRIORITY === '4');
+    t.true(slogJSON[0].SYSLOG_IDENTIFIER === sjournal.constructor.name);
+    t.true(slogJSON[0].MESSAGE === message);
+    t.true(typeof slogJSON === 'object');
+});
+
+test('should throw an error on new instance and wrong level', async(t) => {
+    await t.throwsAsync(async() => {
+        const foo = new SysDLogger({ level: 'foobar' });
+        await foo.write('will not arrive here');
+    }, { instanceOf: Error, message: ERROR_MESSAGE_LEVEL });
 });
 
