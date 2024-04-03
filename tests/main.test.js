@@ -231,3 +231,28 @@ test('should throw an error writing with wrong level', async(t) => {
     }, { instanceOf: Error, message: ERROR_MESSAGE_LEVEL });
 });
 
+test('should throw an error reading with wrong level', async(t) => {
+    await t.throwsAsync(async() => {
+        const foo = new SysDLogger();
+        await foo.read('will throw an exexption', { level: 'foobar' });
+    }, { instanceOf: Error, message: ERROR_MESSAGE_LEVEL });
+});
+
+test.serial('should read by level', async(t) => {
+    const slog = new SysDLogger({ 
+        json: true,
+        reverse: true,
+        lines: 8,
+    });
+    
+
+    const messageEmergency = 'this is an emerg message';
+    const messageAlert = 'this is an alert message';
+    const messageCritical = 'this is an critical message';
+    const messageError = 'this is an err message';
+    const messageWarning = 'this is a warning message';
+    const messageNotice = 'this is a notice message';
+    const messageInfo = 'this is an info message';
+    const messageDebug = 'this is a debug message';
+
+
