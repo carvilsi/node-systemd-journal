@@ -350,3 +350,131 @@ test.serial('should read by level', async(t) => {
     t.true(slogJSON[7].PRIORITY === 0);
     t.true(slogJSON[7].MESSAGE === messages.emerg);
 });
+
+test.serial('should write emerg', async(t) => {
+    const level = 'emerg';
+    const message = `${level} ${MESSAGE}`;
+
+    await syslogger.emerg(message);
+    const logEntry = await syslogger.read({
+        reverse: true,
+        json: true,
+        level
+    });
+
+    t.true(logEntry[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(logEntry[0].PRIORITY === 0);
+    t.true.skip(logEntry[0].MESSAGE === message);
+});
+
+test.serial('should write alert', async(t) => {
+    const level = 'alert';
+    const message = `${level} ${MESSAGE}`;
+
+    await syslogger.alert(message);
+    const logEntry = await syslogger.read({
+        reverse: true,
+        json: true,
+        level
+    });
+
+    t.true(logEntry[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(logEntry[0].PRIORITY === 1);
+    t.true(logEntry[0].MESSAGE === message);
+});
+
+test.serial('should write crit', async(t) => {
+    const level = 'crit';
+    const message = `${level} ${MESSAGE}`;
+
+    await syslogger.crit(message);
+    const logEntry = await syslogger.read({
+        reverse: true,
+        json: true,
+        level
+    });
+
+    t.true(logEntry[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(logEntry[0].PRIORITY === 2);
+    t.true(logEntry[0].MESSAGE === message);
+});
+
+test.serial('should write error', async(t) => {
+    const level = 'error';
+    const message = `${level} ${MESSAGE}`;
+
+    await syslogger.error(message);
+    const logEntry = await syslogger.read({
+        reverse: true,
+        json: true,
+        level
+    });
+
+    t.true(logEntry[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(logEntry[0].PRIORITY === 3);
+    t.true(logEntry[0].MESSAGE === message);
+});
+
+test.serial('should write warning', async(t) => {
+    const level = 'warning';
+    const message = `${level} ${MESSAGE}`;
+
+    await syslogger.warn(message);
+    const logEntry = await syslogger.read({
+        reverse: true,
+        json: true,
+        level
+    });
+
+    t.true(logEntry[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(logEntry[0].PRIORITY === 4);
+    t.true(logEntry[0].MESSAGE === message);
+});
+
+test.serial('should write notice', async(t) => {
+    const level = 'notice';
+    const message = `${level} ${MESSAGE}`;
+
+    await syslogger.notice(message);
+    const logEntry = await syslogger.read({
+        reverse: true,
+        json: true,
+        level
+    });
+
+    t.true(logEntry[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(logEntry[0].PRIORITY === 5);
+    t.true(logEntry[0].MESSAGE === message);
+});
+
+test.serial('should write info', async(t) => {
+    const level = 'info';
+    const message = `${level} ${MESSAGE}`;
+
+    await syslogger.info(message);
+    const logEntry = await syslogger.read({
+        reverse: true,
+        json: true,
+        level
+    });
+
+    t.true(logEntry[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(logEntry[0].PRIORITY === 6);
+    t.true(logEntry[0].MESSAGE === message);
+});
+
+test.serial('should write debug', async(t) => {
+    const level = 'debug';
+    const message = `${level} ${MESSAGE}`;
+
+    await syslogger.debug(message);
+    const logEntry = await syslogger.read({
+        reverse: true,
+        json: true,
+        level
+    });
+
+    t.true(logEntry[0].SYSLOG_IDENTIFIER === TAG);
+    t.true(logEntry[0].PRIORITY === 7);
+    t.true(logEntry[0].MESSAGE === message);
+});

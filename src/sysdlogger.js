@@ -96,6 +96,38 @@ export class SysDLogger {
         return await exec(command);
     }
 
+    async emerg(message) {
+        return await this.write(message, { level: 'emerg' });
+    }
+
+    async alert(message) {
+        return await this.write(message, { level: 'alert' });
+    }
+
+    async crit(message) {
+        return await this.write(message, { level: 'crit' });
+    }
+
+    async error(message) {
+        return await this.write(message, { level: 'error' });
+    }
+
+    async warn(message) {
+        return await this.write(message, { level: 'warn' });
+    }
+
+    async notice(message) {
+        return await this.write(message, { level: 'notice' });
+    }
+
+    async info(message) {
+        return await this.write(message, { level: 'info' });
+    }
+
+    async debug(message) {
+        return await this.write(message, { level: 'debug' });
+    }
+
     async read({
         tag = undefined,
         json = false,

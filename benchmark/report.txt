@@ -1,15 +1,23 @@
 ┌─────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┬────────────────────┬───────────┬─────────┐
 │ (index) │ Task Name                                                                                       │ ops/sec │ Average Time (ns)  │ Margin    │ Samples │
 ├─────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼────────────────────┼───────────┼─────────┤
-│ 0       │ 'add an entry to systemd-journal'                                                               │ '143'   │ 6952412.399999972  │ '±26.93%' │ 15      │
-│ 1       │ 'add an entry to systemd-journal with a custom tag'                                             │ '219'   │ 4550653.272727273  │ '±25.30%' │ 22      │
-│ 2       │ 'add an entry to systemd-journal with a custom level'                                           │ '177'   │ 5631703.684210499  │ '±20.34%' │ 19      │
-│ 3       │ 'retrieve an entry from systemd-journal'                                                        │ '107'   │ 9283621.272727322  │ '±35.57%' │ 11      │
-│ 4       │ 'retrieve an entry from systemd-journal by custom tag'                                          │ '70'    │ 14268017.499999974 │ '±45.46%' │ 10      │
-│ 5       │ 'retrieve an entry from systemd-journal by tag in JSON format'                                  │ '46'    │ 21715379.199999962 │ '±19.96%' │ 10      │
-│ 6       │ 'retrieve 2 lines from systemd-journal'                                                         │ '97'    │ 10220275.09999989  │ '±41.71%' │ 10      │
-│ 7       │ 'retrieve lines in reverse mode from systemd-journal'                                           │ '106'   │ 9417685.090909095  │ '±23.94%' │ 11      │
-│ 8       │ 'retrieve entries by level from systemd-journal'                                                │ '89'    │ 11198433.000000022 │ '±39.36%' │ 10      │
-│ 9       │ 'retrieve 2 entries from systemd-journal by tag in JSON format and reverse mode'                │ '83'    │ 12046831.40000011  │ '±23.04%' │ 10      │
-│ 10      │ 'retrieve 2 entries from systemd-journal by tag in JSON format and reverse mode and level info' │ '64'    │ 15566245.000000026 │ '±26.70%' │ 10      │
+│ 0       │ 'add an entry to systemd-journal'                                                               │ '112'   │ 8889905.166666683  │ '±19.12%' │ 12      │
+│ 1       │ 'add an entry to systemd-journal with a custom tag'                                             │ '105'   │ 9504846.999999866  │ '±20.48%' │ 11      │
+│ 2       │ 'add an entry to systemd-journal with a custom level'                                           │ '105'   │ 9474934.727272699  │ '±21.31%' │ 11      │
+│ 3       │ 'retrieve an entry from systemd-journal'                                                        │ '28'    │ 35069989.49999998  │ '±11.38%' │ 10      │
+│ 4       │ 'retrieve an entry from systemd-journal by custom tag'                                          │ '16'    │ 59412221.10000003  │ '±5.11%'  │ 10      │
+│ 5       │ 'retrieve an entry from systemd-journal by tag in JSON format'                                  │ '18'    │ 52775153.70000011  │ '±6.39%'  │ 10      │
+│ 6       │ 'retrieve 2 lines from systemd-journal'                                                         │ '48'    │ 20735190.500000134 │ '±11.20%' │ 10      │
+│ 7       │ 'retrieve lines in reverse mode from systemd-journal'                                           │ '30'    │ 32596117.90000008  │ '±13.00%' │ 10      │
+│ 8       │ 'retrieve entries by level from systemd-journal'                                                │ '22'    │ 43716687.10000013  │ '±16.50%' │ 10      │
+│ 9       │ 'retrieve 2 entries from systemd-journal by tag in JSON format and reverse mode'                │ '46'    │ 21356990.000000134 │ '±9.52%'  │ 10      │
+│ 10      │ 'retrieve 2 entries from systemd-journal by tag in JSON format and reverse mode and level info' │ '26'    │ 37772544.29999994  │ '±12.18%' │ 10      │
+│ 11      │ 'add an entry to systemd-journal with debug level'                                              │ '96'    │ 10386634.89999999  │ '±17.69%' │ 10      │
+│ 12      │ 'add an entry to systemd-journal with info level'                                               │ '110'   │ 9015759.750000067  │ '±13.36%' │ 12      │
+│ 13      │ 'add an entry to systemd-journal with notice level'                                             │ '87'    │ 11392725.19999986  │ '±20.74%' │ 10      │
+│ 14      │ 'add an entry to systemd-journal with warning level'                                            │ '104'   │ 9562093.27272733   │ '±15.49%' │ 11      │
+│ 15      │ 'add an entry to systemd-journal with error level'                                              │ '99'    │ 10099010.499999896 │ '±12.88%' │ 10      │
+│ 16      │ 'add an entry to systemd-journal with critical level'                                           │ '111'   │ 8951743.583333382  │ '±7.80%'  │ 12      │
+│ 17      │ 'add an entry to systemd-journal with alert level'                                              │ '102'   │ 9765350.81818193   │ '±11.38%' │ 11      │
+│ 18      │ 'add an entry to systemd-journal with emergency level'                                          │ '91'    │ 10956529.599999975 │ '±13.95%' │ 10      │
 └─────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴────────────────────┴───────────┴─────────┘
