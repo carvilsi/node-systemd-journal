@@ -176,7 +176,7 @@ test.serial('should log with default level; notice (5)', async(t) => {
         reverse: true,
         lines: 1,
     });
-    t.true(slogJSON[0].PRIORITY === '5');
+    t.true(slogJSON[0].PRIORITY === 5);
     t.true(slogJSON[0].SYSLOG_IDENTIFIER === TAG);
     t.true(slogJSON[0].MESSAGE === message);
     t.true(typeof slogJSON === 'object');
@@ -196,7 +196,7 @@ test.serial('should log with custom level on new instance; warning (4)',
             reverse: true,
             lines: 1,
         });
-        t.true(slogJSON[0].PRIORITY === '4');
+        t.true(slogJSON[0].PRIORITY === 4);
         t.true(slogJSON[0].SYSLOG_IDENTIFIER === sjournal.constructor.name);
         t.true(slogJSON[0].MESSAGE === message);
         t.true(typeof slogJSON === 'object');
@@ -211,7 +211,7 @@ test.serial('should write log with custom level error (3)', async(t) => {
         reverse: true,
         lines: 1,
     });
-    t.true(slogJSON[0].PRIORITY === '3');
+    t.true(slogJSON[0].PRIORITY === 3);
     t.true(slogJSON[0].SYSLOG_IDENTIFIER === sjournal.constructor.name);
     t.true(slogJSON[0].MESSAGE === message);
     t.true(typeof slogJSON === 'object');
@@ -261,92 +261,92 @@ test.serial('should read by level', async(t) => {
     }
 
     let slogJSON = await slog.read({ level: 'emerg' });
-    t.true(slogJSON[0].PRIORITY === '0');
+    t.true(slogJSON[0].PRIORITY === 0);
     t.true(slogJSON[0].SYSLOG_IDENTIFIER === slog.constructor.name);
     t.true(slogJSON[0].MESSAGE === messages.emerg);
     t.true(typeof slogJSON === 'object');
 
     slogJSON = await slog.read({ level: 'alert' });
-    t.true(slogJSON[0].PRIORITY === '1');
+    t.true(slogJSON[0].PRIORITY === 1);
     t.true(slogJSON[0].MESSAGE === messages.alert);
-    t.true(slogJSON[1].PRIORITY === '0');
+    t.true(slogJSON[1].PRIORITY === 0);
     t.true(slogJSON[1].MESSAGE === messages.emerg);
 
     slogJSON = await slog.read({ level: 'crit' });
-    t.true(slogJSON[0].PRIORITY === '2');
+    t.true(slogJSON[0].PRIORITY === 2);
     t.true(slogJSON[0].MESSAGE === messages.crit);
-    t.true(slogJSON[1].PRIORITY === '1');
+    t.true(slogJSON[1].PRIORITY === 1);
     t.true(slogJSON[1].MESSAGE === messages.alert);
-    t.true(slogJSON[2].PRIORITY === '0');
+    t.true(slogJSON[2].PRIORITY === 0);
     t.true(slogJSON[2].MESSAGE === messages.emerg);
 
     slogJSON = await slog.read({ level: 'err' });
-    t.true(slogJSON[0].PRIORITY === '3');
+    t.true(slogJSON[0].PRIORITY === 3);
     t.true(slogJSON[0].MESSAGE === messages.err);
-    t.true(slogJSON[1].PRIORITY === '2');
+    t.true(slogJSON[1].PRIORITY === 2);
     t.true(slogJSON[1].MESSAGE === messages.crit);
-    t.true(slogJSON[2].PRIORITY === '1');
+    t.true(slogJSON[2].PRIORITY === 1);
     t.true(slogJSON[2].MESSAGE === messages.alert);
-    t.true(slogJSON[3].PRIORITY === '0');
+    t.true(slogJSON[3].PRIORITY === 0);
     t.true(slogJSON[3].MESSAGE === messages.emerg);
 
     slogJSON = await slog.read({ level: 'warn' });
-    t.true(slogJSON[0].PRIORITY === '4');
+    t.true(slogJSON[0].PRIORITY === 4);
     t.true(slogJSON[0].MESSAGE === messages.warning);
-    t.true(slogJSON[1].PRIORITY === '3');
+    t.true(slogJSON[1].PRIORITY === 3);
     t.true(slogJSON[1].MESSAGE === messages.err);
-    t.true(slogJSON[2].PRIORITY === '2');
+    t.true(slogJSON[2].PRIORITY === 2);
     t.true(slogJSON[2].MESSAGE === messages.crit);
-    t.true(slogJSON[3].PRIORITY === '1');
+    t.true(slogJSON[3].PRIORITY === 1);
     t.true(slogJSON[3].MESSAGE === messages.alert);
-    t.true(slogJSON[4].PRIORITY === '0');
+    t.true(slogJSON[4].PRIORITY === 0);
     t.true(slogJSON[4].MESSAGE === messages.emerg);
 
     slogJSON = await slog.read({ level: 'notice' });
-    t.true(slogJSON[0].PRIORITY === '5');
+    t.true(slogJSON[0].PRIORITY === 5);
     t.true(slogJSON[0].MESSAGE === messages.notice);
-    t.true(slogJSON[1].PRIORITY === '4');
+    t.true(slogJSON[1].PRIORITY === 4);
     t.true(slogJSON[1].MESSAGE === messages.warning);
-    t.true(slogJSON[2].PRIORITY === '3');
+    t.true(slogJSON[2].PRIORITY === 3);
     t.true(slogJSON[2].MESSAGE === messages.err);
-    t.true(slogJSON[3].PRIORITY === '2');
+    t.true(slogJSON[3].PRIORITY === 2);
     t.true(slogJSON[3].MESSAGE === messages.crit);
-    t.true(slogJSON[4].PRIORITY === '1');
+    t.true(slogJSON[4].PRIORITY === 1);
     t.true(slogJSON[4].MESSAGE === messages.alert);
-    t.true(slogJSON[5].PRIORITY === '0');
+    t.true(slogJSON[5].PRIORITY === 0);
     t.true(slogJSON[5].MESSAGE === messages.emerg);
 
     slogJSON = await slog.read({ level: 'info' });
-    t.true(slogJSON[0].PRIORITY === '6');
+    t.true(slogJSON[0].PRIORITY === 6);
     t.true(slogJSON[0].MESSAGE === messages.info);
-    t.true(slogJSON[1].PRIORITY === '5');
+    t.true(slogJSON[1].PRIORITY === 5);
     t.true(slogJSON[1].MESSAGE === messages.notice);
-    t.true(slogJSON[2].PRIORITY === '4');
+    t.true(slogJSON[2].PRIORITY === 4);
     t.true(slogJSON[2].MESSAGE === messages.warning);
-    t.true(slogJSON[3].PRIORITY === '3');
+    t.true(slogJSON[3].PRIORITY === 3);
     t.true(slogJSON[3].MESSAGE === messages.err);
-    t.true(slogJSON[4].PRIORITY === '2');
+    t.true(slogJSON[4].PRIORITY === 2);
     t.true(slogJSON[4].MESSAGE === messages.crit);
-    t.true(slogJSON[5].PRIORITY === '1');
+    t.true(slogJSON[5].PRIORITY === 1);
     t.true(slogJSON[5].MESSAGE === messages.alert);
-    t.true(slogJSON[6].PRIORITY === '0');
+    t.true(slogJSON[6].PRIORITY === 0);
     t.true(slogJSON[6].MESSAGE === messages.emerg);
 
     slogJSON = await slog.read({ level: 'debug' });
-    t.true(slogJSON[0].PRIORITY === '7');
+    t.true(slogJSON[0].PRIORITY === 7);
     t.true(slogJSON[0].MESSAGE === messages.debug);
-    t.true(slogJSON[1].PRIORITY === '6');
+    t.true(slogJSON[1].PRIORITY === 6);
     t.true(slogJSON[1].MESSAGE === messages.info);
-    t.true(slogJSON[2].PRIORITY === '5');
+    t.true(slogJSON[2].PRIORITY === 5);
     t.true(slogJSON[2].MESSAGE === messages.notice);
-    t.true(slogJSON[3].PRIORITY === '4');
+    t.true(slogJSON[3].PRIORITY === 4);
     t.true(slogJSON[3].MESSAGE === messages.warning);
-    t.true(slogJSON[4].PRIORITY === '3');
+    t.true(slogJSON[4].PRIORITY === 3);
     t.true(slogJSON[4].MESSAGE === messages.err);
-    t.true(slogJSON[5].PRIORITY === '2');
+    t.true(slogJSON[5].PRIORITY === 2);
     t.true(slogJSON[5].MESSAGE === messages.crit);
-    t.true(slogJSON[6].PRIORITY === '1');
+    t.true(slogJSON[6].PRIORITY === 1);
     t.true(slogJSON[6].MESSAGE === messages.alert);
-    t.true(slogJSON[7].PRIORITY === '0');
+    t.true(slogJSON[7].PRIORITY === 0);
     t.true(slogJSON[7].MESSAGE === messages.emerg);
 });

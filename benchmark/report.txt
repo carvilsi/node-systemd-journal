@@ -1,15 +1,15 @@
 ┌─────────┬─────────────────────────────────────────────────────────────────────────────────────────────────┬─────────┬────────────────────┬───────────┬─────────┐
 │ (index) │ Task Name                                                                                       │ ops/sec │ Average Time (ns)  │ Margin    │ Samples │
 ├─────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┼────────────────────┼───────────┼─────────┤
-│ 0       │ 'add an entry to systemd-journal'                                                               │ '118'   │ 8458016.416666662  │ '±39.45%' │ 12      │
-│ 1       │ 'add an entry to systemd-journal with a custom tag'                                             │ '207'   │ 4813621.045454531  │ '±22.66%' │ 22      │
-│ 2       │ 'add an entry to systemd-journal with a custom level'                                           │ '118'   │ 8435512.249999989  │ '±36.02%' │ 12      │
-│ 3       │ 'retrieve an entry from systemd-journal'                                                        │ '68'    │ 14532650.600000013 │ '±33.47%' │ 10      │
-│ 4       │ 'retrieve an entry from systemd-journal by custom tag'                                          │ '73'    │ 13566608.400000017 │ '±46.75%' │ 10      │
-│ 5       │ 'retrieve an entry from systemd-journal by tag in JSON format'                                  │ '64'    │ 15566219.199999977 │ '±31.63%' │ 10      │
-│ 6       │ 'retrieve 2 lines from systemd-journal'                                                         │ '81'    │ 12282925.699999986 │ '±46.73%' │ 10      │
-│ 7       │ 'retrieve lines in reverse mode from systemd-journal'                                           │ '94'    │ 10577559.000000156 │ '±24.65%' │ 10      │
-│ 8       │ 'retrieve entries by level from systemd-journal'                                                │ '92'    │ 10825719.099999923 │ '±23.35%' │ 10      │
-│ 9       │ 'retrieve 2 entries from systemd-journal by tag in JSON format and reverse mode'                │ '66'    │ 15002487.800000018 │ '±22.55%' │ 10      │
-│ 10      │ 'retrieve 2 entries from systemd-journal by tag in JSON format and reverse mode and level info' │ '70'    │ 14116524.600000048 │ '±33.66%' │ 10      │
+│ 0       │ 'add an entry to systemd-journal'                                                               │ '143'   │ 6952412.399999972  │ '±26.93%' │ 15      │
+│ 1       │ 'add an entry to systemd-journal with a custom tag'                                             │ '219'   │ 4550653.272727273  │ '±25.30%' │ 22      │
+│ 2       │ 'add an entry to systemd-journal with a custom level'                                           │ '177'   │ 5631703.684210499  │ '±20.34%' │ 19      │
+│ 3       │ 'retrieve an entry from systemd-journal'                                                        │ '107'   │ 9283621.272727322  │ '±35.57%' │ 11      │
+│ 4       │ 'retrieve an entry from systemd-journal by custom tag'                                          │ '70'    │ 14268017.499999974 │ '±45.46%' │ 10      │
+│ 5       │ 'retrieve an entry from systemd-journal by tag in JSON format'                                  │ '46'    │ 21715379.199999962 │ '±19.96%' │ 10      │
+│ 6       │ 'retrieve 2 lines from systemd-journal'                                                         │ '97'    │ 10220275.09999989  │ '±41.71%' │ 10      │
+│ 7       │ 'retrieve lines in reverse mode from systemd-journal'                                           │ '106'   │ 9417685.090909095  │ '±23.94%' │ 11      │
+│ 8       │ 'retrieve entries by level from systemd-journal'                                                │ '89'    │ 11198433.000000022 │ '±39.36%' │ 10      │
+│ 9       │ 'retrieve 2 entries from systemd-journal by tag in JSON format and reverse mode'                │ '83'    │ 12046831.40000011  │ '±23.04%' │ 10      │
+│ 10      │ 'retrieve 2 entries from systemd-journal by tag in JSON format and reverse mode and level info' │ '64'    │ 15566245.000000026 │ '±26.70%' │ 10      │
 └─────────┴─────────────────────────────────────────────────────────────────────────────────────────────────┴─────────┴────────────────────┴───────────┴─────────┘
