@@ -46,6 +46,8 @@ const options = {
     lines: 0,
     // if true will retrieve first latest entries
     reverse: false,
+    // string; the choosen level or priority for logging, default: notice
+    level: undefined, 
 }
 ```  
 
@@ -64,9 +66,11 @@ import assert from 'node:assert';
             json: true,
             reverse: true,
             lines: 1,
+            level: 'warn',
     });
     assert(slogJSON[0].SYSLOG_IDENTIFIER === myTag);
     assert(slogJSON[0].MESSAGE === message);
+    assert(slogJSON[0].PRIORITY === 4);
     assert(typeof slogJSON === 'object');
 })();
 ```     
@@ -106,6 +110,54 @@ The properties of the JSON object from journal are:
   '_COMM'
 ]
 ```
+
+The list of **levels** and the equivalent of *PRIORITY* JSON field:
+
+```javascript
+[ 
+    emerg: 0,
+    alert: 1,
+    crit: 2,
+    err: 3,
+    error: 3,
+    warning: 4,
+    warn: 4,
+    notice: 5,
+    info: 6,
+    debug: 7
+]
+```
+
+Also possible to use an alias to write a log message with a level like this:
+
+```javascript
+const MESSAGE = 'a pigeon over the roof';
+
+//add an entry to systemd-journal with debug level
+await syslogger.debug(MESSAGE);
+
+//add an entry to systemd-journal with info level
+await syslogger.info(MESSAGE);
+
+//add an entry to systemd-journal with notice level
+await syslogger.notice(MESSAGE);
+
+//add an entry to systemd-journal with warning level
+await syslogger.warn(MESSAGE);
+
+//add an entry to systemd-journal with error level
+await syslogger.error(MESSAGE);
+
+//add an entry to systemd-journal with critical level
+await syslogger.crit(MESSAGE);
+
+//add an entry to systemd-journal with alert level
+await syslogger.alert(MESSAGE);
+
+//add an entry to systemd-journal with emergency level
+await syslogger.emerg(MESSAGE);
+```
+
 More info about [Journal JSON format](https://systemd.io/JOURNAL_EXPORT_FORMATS#journal-json-format)
 
 More info also:
