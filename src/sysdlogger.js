@@ -29,7 +29,7 @@ export class SysDLogger {
 
     #getLogPriority(level) {
         const priority = level || this.options.level;
-        if (typeof priority !== 'undefined' && 
+        if (typeof priority !== 'undefined' &&
             !Object.hasOwn(this.#syslogLevels, priority)) {
             throw new Error(`not valid log level: '${priority}', ` +
                     'the valid levels are: ' +
@@ -37,7 +37,7 @@ export class SysDLogger {
         }
         return this.#syslogLevels[priority];
     }
-    
+
     #getJournalCommand(tag, json, lines, reverse, level) {
         const t = tag || this.options.tag;
         const numberOflines = lines || this.options.lines;

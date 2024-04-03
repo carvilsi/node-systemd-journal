@@ -19,6 +19,9 @@ const syslogger = new SysDLogger({ tag: TAG });
         .add('add an entry to systemd-journal with a custom tag', () => {
             syslogger.write(MESSAGE, { tag: CUSTOM_TAG });
         })
+        .add('add an entry to systemd-journal with a custom level', () => {
+            syslogger.write(MESSAGE, { level: 'info' });
+        })
         .add('retrieve an entry from systemd-journal', () => {
             syslogger.read();
         })
@@ -35,9 +38,21 @@ const syslogger = new SysDLogger({ tag: TAG });
         .add('retrieve lines in reverse mode from systemd-journal', () => {
             syslogger.read({ reverse: true });
         })
+        .add('retrieve entries by level from systemd-journal', () => {
+            syslogger.read({ level: 'info' });
+        })
         .add('retrieve 2 entries from systemd-journal by tag in JSON format' +
             ' and reverse mode', () => {
             syslogger.read({ json: true, lines: 2, reverse: true });
+        })
+        .add('retrieve 2 entries from systemd-journal by tag in JSON format' +
+            ' and reverse mode and level info', () => {
+            syslogger.read({
+                json: true,
+                lines: 2,
+                reverse: true,
+                level: 'info'
+            });
         });
 
     await bench.warmup();
