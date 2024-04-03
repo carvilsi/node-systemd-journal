@@ -234,25 +234,59 @@ test('should throw an error writing with wrong level', async(t) => {
 test('should throw an error reading with wrong level', async(t) => {
     await t.throwsAsync(async() => {
         const foo = new SysDLogger();
-        await foo.read('will throw an exexption', { level: 'foobar' });
+        await foo.read({ level: 'foobar' });
     }, { instanceOf: Error, message: ERROR_MESSAGE_LEVEL });
 });
 
-test.serial('should read by level', async(t) => {
+test.only('should read by level', async(t) => {
     const slog = new SysDLogger({ 
         json: true,
         reverse: true,
         lines: 8,
     });
     
+    const messages = {
+        emerg: 'this is an emerg message',
+        alert: 'this is an alert message',
+        crit: 'this is an critical message',
+        err: 'this is an err message',
+        warning: 'this is a warning message',
+        notice: 'this is a notice message',
+        info: 'this is an info message',
+        debug: 'this is a debug message',
+    };
 
-    const messageEmergency = 'this is an emerg message';
-    const messageAlert = 'this is an alert message';
-    const messageCritical = 'this is an critical message';
-    const messageError = 'this is an err message';
-    const messageWarning = 'this is a warning message';
-    const messageNotice = 'this is a notice message';
-    const messageInfo = 'this is an info message';
-    const messageDebug = 'this is a debug message';
+    for (const [level, message] of Object.entries(messages)) {
+        await slog.write(message, { level: level });
+    }
 
-
+    let slogJSON = await slog.read({ level: 'emerg' });
+    t.true(slogJSON[0].PRIORITY === '0');
+    t.true(slogJSON[0].SYSLOG_IDENTIFIER === slog.constructor.name);
+    t.true(slogJSON[0].MESSAGE === messages.emerg);
+    t.true(typeof slogJSON === 'object');
+    
+    slogJSON = await slog.read({ level: 'alert' });
+    t.true(slogJSON[0].PRIORITY === '1');
+    t.true(slogJSON[0].MESSAGE === messages.alert);
+    t.true(slogJSON[1].PRIORITY === '0');
+    t.true(slogJSON[1].MESSAGE === messages.emerg);
+ 
+    slogJSON = await slog.read({ level: 'crit' });
+    t.true(slogJSON[0].PRIORITY === '2');
+    t.true(slogJSON[0].MESSAGE === messages.crit);
+    t.true(slogJSON[1].PRIORITY === '1');
+    t.true(slogJSON[1].MESSAGE === messages.alert);
+    t.true(slogJSON[2].PRIORITY === '0');
+    t.true(slogJSON[2].MESSAGE === messages.emerg);
+ 
+    slogJSON = await slog.read({ level: 'err' });
+    t.true(slogJSON[0].PRIORITY === '3');
+    t.true(slogJSON[0].MESSAGE === messages.err);
+    t.true(slogJSON[1].PRIORITY === '2');
+    t.true(slogJSON[1].MESSAGE === messages.crit);
+    t.true(slogJSON[2].PRIORITY === '1');
+    t.true(slogJSON[2].MESSAGE === messages.alert);
+    t.true(slogJSON[3].PRIORITY === '0');
+    t.true(slogJSON[3].MESSAGE === messages.emerg);
+});

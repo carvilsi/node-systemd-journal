@@ -27,15 +27,18 @@ export class SysDLogger {
         debug: 7,
     };
 
-    #checkLevels(priority) {
-        if (typeof this.#syslogLevels[priority] === 'undefined') {
+    #getLogPriority(level) {
+        const priority = level || this.options.level;
+        if (typeof priority !== 'undefined' && 
+            !Object.hasOwn(this.#syslogLevels, priority)) {
             throw new Error(`not valid log level: '${priority}', ` +
                     'the valid levels are: ' +
                     `[${Object.keys(this.#syslogLevels).join(', ')}]`);
         }
+        return this.#syslogLevels[priority];
     }
-
-    #getJournalCommand(tag, json, lines, reverse) {
+    
+    #getJournalCommand(tag, json, lines, reverse, level) {
         const t = tag || this.options.tag;
         const numberOflines = lines || this.options.lines;
 
@@ -49,6 +52,10 @@ export class SysDLogger {
         if (reverse || this.options.reverse) {
             journalctlCommand = `${journalctlCommand} -r`;
         }
+        const priority = this.#getLogPriority(level);
+        if (typeof priority !== 'undefined') {
+            journalctlCommand = `${journalctlCommand} -p ${priority}`;
+        }
         return journalctlCommand;
     }
 
@@ -56,11 +63,10 @@ export class SysDLogger {
         let loggerCommand = `logger ${message}`;
         const t = tag || this.options.tag;
         loggerCommand = `${loggerCommand} --tag ${t}`;
-        const priority = level || this.options.level;
+        const priority = this.#getLogPriority(level);
         if (typeof priority !== 'undefined') {
-            this.#checkLevels(priority);
             loggerCommand = `${loggerCommand} ` +
-                `-p ${this.#syslogLevels[priority]}`;
+                `-p ${priority}`;
         }
         return loggerCommand;
     }
@@ -72,7 +78,7 @@ export class SysDLogger {
             options.tag = this.options.tag;
         }
         if (typeof options.level !== 'undefined') {
-            this.#checkLevels(options.level);
+            this.#getLogPriority(options.level);
         }
         this.options = options;
     }
