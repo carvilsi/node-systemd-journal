@@ -1,6 +1,6 @@
 import os from 'node:os';
 
-const PLATFORM_SUPPORTED = [ 'linux' ];
+const PLATFORM_SUPPORTED = [ 'linux', 'darwin' ];
 const platform = os.platform();
 
 export function checkPlatform() {
